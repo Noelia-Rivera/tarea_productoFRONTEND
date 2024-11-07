@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { Categoria } from '../../models/categoria';
 import { CategoriaService } from '../../service/categoria.service';
-<<<<<<< HEAD
-=======
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,25 +13,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmationService, MessageService } from 'primeng/api';
->>>>>>> dc4285e (commit)
 
 @Component({
   selector: 'app-categoria',
   standalone: true,
-<<<<<<< HEAD
-  imports: [SidebarComponent, TableModule, CommonModule, CardModule],
-=======
   imports: [SidebarComponent,TableModule, CommonModule, DialogModule, ButtonModule, InputTextModule, FormsModule, ConfirmDialogModule, ToastModule, DropdownModule],
->>>>>>> dc4285e (commit)
   templateUrl: './categoria.component.html',
   styleUrl: './categoria.component.css'
 })
 export class CategoriaComponent {
   categorias: Categoria[]=[];
-<<<<<<< HEAD
-  
-  constructor(private categoriaService: CategoriaService){}
-=======
   categoria: Categoria= new Categoria(0, '');
   titulo: string= '';
   opc: string= '';
@@ -44,14 +33,11 @@ export class CategoriaComponent {
   constructor(private categoriaService: CategoriaService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService){}
->>>>>>> dc4285e (commit)
 
   ngOnInit():void {
     this.listarCategorias();
 }
 
-<<<<<<< HEAD
-=======
 showDialogCreate(){
   this.titulo= "Añadir nueva Categoria"
   this.opc= "Guardar";
@@ -81,7 +67,6 @@ opcion(): void{
   }
 }    
 
->>>>>>> dc4285e (commit)
 listarCategorias(){
   this.categoriaService.getCategoria().subscribe(
     (data: Categoria[]) => {
@@ -89,8 +74,6 @@ listarCategorias(){
     });
 }
 
-<<<<<<< HEAD
-=======
 addCategoria():void{
   this.categoriaService.crearCategoria(this.categoria).subscribe({
     next: () => {
@@ -193,5 +176,4 @@ showDiaologDelete(event: Event, id: number){
   });
 }
 
->>>>>>> dc4285e (commit)
 }
