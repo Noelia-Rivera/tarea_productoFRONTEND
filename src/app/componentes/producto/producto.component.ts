@@ -64,7 +64,7 @@ export class ProductoComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Correcto',
-          detail: 'Escuela registrada con exito',
+          detail: 'Producto registrado con exito',
         });
         this.listarProducto();
         this.op= 0;
@@ -74,38 +74,44 @@ export class ProductoComponent {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: "No se puedo registrar la Escuela",
+          detail: "No se puedo registrar el producto",
         });
       },
     });
     this.visible= false;
   }
 
-  editEscuelas(){
-    this.producto.id_categoria = this.categorias.find(f => f.id === this.producto.id_categoria?.id)!;
+
+  editProductos() {
+    const categoriaSeleccionada = this.categorias.find(f => f.id === this.producto.categoria?.id);
+    if (categoriaSeleccionada) {
+      this.producto.categoria = categoriaSeleccionada; 
+    } else {
+      console.error('Categoría seleccionada no encontrada');
+    }
     this.productoService.editaProducto(this.producto, this.producto.id).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Correcto',
-          detail: 'Escuela editada con exito',
+          detail: 'Producto editado con éxito',
         });
         this.listarProducto();
-        console.log(this.producto.id + ' ' + this.producto.nombre + ' ' + this.producto.id_categoria);
-        this.op=0;
+        console.log(`${this.producto.id} ${this.producto.nombre} ${this.producto.categoria.nombre}`);
+        this.op = 0;
       },
       error: () => {
         this.isDeleteInProgress = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo editar la escuela',
+          detail: 'No se pudo editar el producto',
         });
       },
     });
-    this.visible= false;
+    this.visible = false;
   }
-
+  
   deleteEscuela(id: number){
     this.isDeleteInProgress= true;
     this.productoService.deleteProducto(id).subscribe({
@@ -113,7 +119,7 @@ export class ProductoComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Correcto',
-          detail: 'Escuela eliminada con exito',
+          detail: 'Producto eliminado con exito',
         });
         this.isDeleteInProgress= false;
         this.listarProducto();
@@ -123,21 +129,21 @@ export class ProductoComponent {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo eliminar la escuela',
+          detail: 'No se pudo eliminar el producto',
         });
       },
     });  
   }
 
   showDialogCreate(){
-    this.titulo= "Añadir nueva Escuela"
+    this.titulo= "Añadir nuevo Producto"
     this.opc= "Guardar";
     this.op= 0;
     this.visible= true;
   }
 
   showDialogEdit(id: number){
-    this.titulo= "Editar Escuela"
+    this.titulo= "Editar Producto"
     this.opc= "Actualizar";
     this.productoService.getProductoById(id).subscribe((data)=>{
       this.producto= data;
@@ -149,7 +155,7 @@ export class ProductoComponent {
   showDiaologDelete(event: Event, id: number){
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: '¿Quieres eliminar esta escuela?',
+      message: '¿Quieres eliminar esta producto?',
       header: 'Confirmacion de Eliminacion',
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass:"p-button-danger p-button-text",
@@ -173,7 +179,7 @@ export class ProductoComponent {
     this.producto.id= 0;
     this.producto.nombre= '';
     this.producto.cantidad= 0;
-    this.producto.id_categoria= new Categoria(0, '');
+    this.producto.categoria= new Categoria(0, '');
   }
 
   opcion(): void{
@@ -182,7 +188,7 @@ export class ProductoComponent {
       this.limpiar();
     } else if (this.op==1) {
       console.log("Editar");
-      this.editEscuelas();
+      this.editProductos();
       this.limpiar();
     } else {
       console.log("Vacio");

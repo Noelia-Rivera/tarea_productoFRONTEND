@@ -96,5 +96,11 @@
         }
       }
     }
+<<<<<<< HEAD
+=======
+  },
+  "cli": {
+    "analytics": false
+>>>>>>> dc4285e (commit)
   }
 }
